@@ -19,7 +19,7 @@ related:
 «сделай сабы», «почисти звук в ролике», «пересобери с правками».
 
 Команды — по [[../tools/montage|памятке движка]], пороги — [[../craft|ремесло]]. Ниже
-`$M` = `engine/.venv/bin/montage`, `<p>` = `video/projects/<YYYY-MM-DD-тема>`.
+`$M` = `bin/montage`, `<p>` = `video/projects/<YYYY-MM-DD-тема>`.
 
 ## Шаги
 
