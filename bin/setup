@@ -42,5 +42,5 @@ fi
 mkdir -p "$ROOT/video/inbox" "$ROOT/video/projects"
 
 echo
-echo "готово: $ENGINE/.venv/bin/montage --help"
+echo "готово: bin/montage --help"
 echo "проверка: cd $ENGINE && .venv/bin/python -m pytest -q"

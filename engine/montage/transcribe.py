@@ -1,4 +1,8 @@
-"""Расшифровка: голос → слова с таймингами (mlx-whisper на Metal).
+"""Расшифровка: голос → слова с таймингами.
+
+Движок по машине: Mac на Apple Silicon — mlx-whisper на Metal; Windows и прочие — faster-whisper
+на процессоре (та же модель large-v3-turbo, медленнее). `MONTAGE_ASR=faster` — faster-whisper
+и на Mac.
 
 Выход — `work/words-<src>.json`: {"model", "language", "words": [{w, s, e}], "segments": [...]}.
 Кэш по пути, размеру и mtime исходника: повторный прогон не гоняет модель.
@@ -9,7 +13,38 @@ import os
 
 from . import config, core
 
-MODEL = "mlx-community/whisper-large-v3-turbo"
+import platform
+
+MLX_MODEL = "mlx-community/whisper-large-v3-turbo"
+FASTER_MODEL = "large-v3-turbo"
+
+
+def _backend():
+    if os.environ.get("MONTAGE_ASR") in ("faster", "mlx"):
+        return os.environ["MONTAGE_ASR"]
+    return "mlx" if platform.system() == "Darwin" and platform.machine() == "arm64" else "faster"
+
+
+MODEL = MLX_MODEL if _backend() == "mlx" else FASTER_MODEL
+
+
+def _run_mlx(wav, model, language):
+    import mlx_whisper
+    return mlx_whisper.transcribe(wav, path_or_hf_repo=model, word_timestamps=True,
+                                  language=language, condition_on_previous_text=False)
+
+
+def _run_faster(wav, model, language):
+    """faster-whisper → тот же словарь, что отдаёт mlx-whisper: text, language, segments[words]."""
+    from faster_whisper import WhisperModel
+    m = WhisperModel(model, device="cpu", compute_type="int8")
+    segs, info = m.transcribe(wav, language=language, word_timestamps=True,
+                              condition_on_previous_text=False)
+    out = []
+    for s in segs:
+        out.append({"start": s.start, "end": s.end, "text": s.text,
+                    "words": [{"word": w.word, "start": w.start, "end": w.end} for w in (s.words or [])]})
+    return {"language": info.language, "text": "".join(s["text"] for s in out), "segments": out}
 
 
 def _key(path):
@@ -30,9 +65,7 @@ def transcribe_file(src, out_json, model=MODEL, language="ru", force=False):
     # 16 кГц моно — whisper всё равно приводит к этому; заранее — быстрее и без видео
     wav = os.path.splitext(out_json)[0] + ".16k.wav"
     core.ffmpeg("-loglevel", "error", "-y", "-i", src, "-vn", "-ac", "1", "-ar", "16000", wav)
-    import mlx_whisper
-    res = mlx_whisper.transcribe(wav, path_or_hf_repo=model, word_timestamps=True,
-                                 language=language, condition_on_previous_text=False)
+    res = (_run_mlx if model.startswith("mlx-community/") else _run_faster)(wav, model, language)
     os.remove(wav)
     words = []
     for seg in res.get("segments", []):

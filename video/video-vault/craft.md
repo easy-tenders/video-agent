@@ -40,7 +40,7 @@ related:
 
 ## Говорящая голова
 
-1. **Расшифровка** — mlx-whisper со словами и таймингами.
+1. **Расшифровка** — whisper со словами и таймингами (Mac — mlx-whisper, Windows — faster-whisper).
 2. **Каты по речи:** паузы по словам × `silencedetect` — режем только там, где
    согласны **оба**. Одного мало: whisper растягивает тихие слова, а silencedetect на
    улице тонет в фоне.
@@ -112,6 +112,8 @@ related:
 
 ## ffmpeg
 
-Нужен **ffmpeg-full** (brew): в обычном нет `ass` (сабы) и бывает нет `zscale` (HDR).
-Он keg-only — движок берёт его по пути `/opt/homebrew/opt/ffmpeg-full/bin/` сам,
-системный `ffmpeg` не трогает. Проверка здоровья: `../../bin/setup`.
+Нужна **полная сборка** ffmpeg: в урезанной нет `ass` (сабы) и бывает нет `zscale` (HDR).
+На Mac — `ffmpeg-full` из brew; он keg-only — движок берёт его по пути
+`/opt/homebrew/opt/ffmpeg-full/bin/` сам, системный `ffmpeg` не трогает. На Windows —
+`Gyan.FFmpeg` из winget (полная, не Essentials), берётся из PATH. Проверка здоровья —
+установщик: `../../bin/setup` (Mac) или `../../bin/setup.cmd` (Windows).

@@ -5,7 +5,7 @@
 **монтаж снятого** (`video/`): из видео с телефона — готовый вертикальный ролик.
 Терминология — `meta-vault/glossary.md`.
 
-Эта копия — оригинал; экземпляр у клиента — `~/maksi-clients/Vera/agent`.
+Эта копия — оригинал (публичный шаблон); свою копию владелец держит приватной.
 
 Финальная цель — **LLM-независимое хранилище**: данные = читаемый markdown,
 переживающий любой инструмент. Харнесс (Claude Code, Codex, следующий) сменный;
@@ -36,8 +36,10 @@
 - плюс операции верха и доменов — реестры `operations.md`.
 
 **Первый запуск.** Неймспейс собран под монтаж (`meta-vault/structure.md`).
-Нет `engine/.venv` → первый ход — `bin/setup` (Homebrew, ffmpeg-full,
-Python 3.12, шрифт Inter; Mac на Apple Silicon). Не заполнен
+Нет `engine/.venv` → первый ход — установка: на Mac `bin/setup` (Homebrew,
+ffmpeg-full, Python 3.12, шрифт Inter; Apple Silicon), на Windows `bin/setup.cmd`
+(winget: Python 3.12, ffmpeg Gyan, шрифт Inter). Команда движка на обеих —
+`bin/montage`. Не заполнен
 `meta-vault/owner.md` → спроси имя и как обращаться, одним вопросом, и
 запиши; монтаж от этого не ждёт. Новое дело помимо монтажа — операция
 «завести домен».
@@ -77,8 +79,8 @@ Python 3.12, шрифт Inter; Mac на Apple Silicon). Не заполнен
   (захват). Описание — `meta-vault/planning.md`.
 - `inventory/` — руки агента: `executors.md`, `automations.md`. Описание —
   `meta-vault/harness.md`.
-- `bin/` — код исполнителей (`bin/check` — прогон проверки, `bin/setup` —
-  установка движка).
+- `bin/` — код исполнителей (`bin/check` — прогон проверки, `bin/montage` —
+  команда движка, `bin/setup` / `bin/setup.cmd` — установка на Mac / Windows).
 - `engine/` — движок монтажа, пакет `montage`; окружение `engine/.venv/` вне git.
 - `.claude/skills/montage/` — навык-указатель на операции `video/`.
 - `people/` — карточки людей; рождается с первой карточкой. Описание —

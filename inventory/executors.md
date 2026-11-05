@@ -18,8 +18,9 @@ related:
 
 | Исполнитель | Род | Где живёт | Что делает | Кто зовёт | Статус |
 |---|---|---|---|---|---|
-| `montage` | script | `engine/montage/` (Python 3.12 + ffmpeg-full), команда `engine/.venv/bin/montage` | монтаж и проверка роликов по `edit.json` | [[../video/video-vault/operations/montage-reel\|смонтировать]] · [[../video/video-vault/operations/check-reel\|проверить]] | in-dev |
-| `bin/setup` | script | `bin/setup` (zsh) | установка движка: ffmpeg-full, Python, `engine/.venv`, Inter | первый запуск (`../CLAUDE.md`) | live |
+| `montage` | script | `engine/montage/` (Python 3.12 + полный ffmpeg), команда `bin/montage` (находит `engine/.venv` на Mac и Windows) | монтаж и проверка роликов по `edit.json` | [[../video/video-vault/operations/montage-reel\|смонтировать]] · [[../video/video-vault/operations/check-reel\|проверить]] | in-dev |
+| `bin/setup` | script | `bin/setup` (zsh) | установка движка на Mac: ffmpeg-full, Python, `engine/.venv`, Inter | первый запуск (`../CLAUDE.md`) | live |
+| `bin/setup.cmd` | script | `bin/setup.cmd` → `bin/setup.ps1` (PowerShell) | установка движка на Windows: winget Python 3.12 и ffmpeg Gyan, `engine/.venv`, Inter | первый запуск (`../CLAUDE.md`) | in-dev |
 | `montage` (навык) | skill | `.claude/skills/montage/SKILL.md` | указатель на операции `video/` | фразы «смонтируй», «проверь ролик» | live |
 | `bin/check` | script | `bin/check` (python3, stdlib) | прогон: связи, имена, таблицы, секреты в индексе; только читает | [[../meta-vault/operations/check-links-and-names\|проверить базу]] | live |
 

@@ -11,20 +11,28 @@
 
 ## Что нужно
 
-- Mac на Apple Silicon (M1 и новее) — расшифровка идёт на Metal (mlx-whisper).
-- [Homebrew](https://brew.sh), [Claude Code](https://claude.com/claude-code).
-- ~5 ГБ места: ffmpeg-full, окружение Python, модель расшифровки.
+- **Mac на Apple Silicon (M1 и новее)** или **Windows 10/11**.
+- [Claude Code](https://claude.com/claude-code) — в приложении Claude (вкладка Code) или в терминале.
+  На Windows Claude Code просит [Git for Windows](https://git-scm.com/download/win) — его bash
+  и запускает команды агента.
+- Установщик пакетов: на Mac — [Homebrew](https://brew.sh); на Windows — `winget`
+  (есть в Windows 11 и в свежей Windows 10).
+- ~5 ГБ места: ffmpeg, окружение Python, модель расшифровки.
+- **Ключей и платных сервисов не нужно** — всё считается на своём компьютере.
 
 ## Как начать
 
 ```sh
 git clone https://github.com/skandar11/video-agent.git
 cd video-agent
-bin/setup
 ```
 
-`bin/setup` ставит ffmpeg-full и Python 3.12 через Homebrew, окружение `engine/.venv`
-с пакетом `montage` и шрифт Inter. Проверка: `cd engine && .venv/bin/python -m pytest -q`.
+- **Mac:** `bin/setup` — ставит ffmpeg-full и Python 3.12 через Homebrew, окружение
+  `engine/.venv` с пакетом `montage` и шрифт Inter.
+- **Windows:** двойной щелчок по `bin\setup.cmd` — то же через winget (Python 3.12,
+  ffmpeg Gyan), расшифровка на процессоре (faster-whisper).
+
+Проверка: `bin/montage --help`. Модель расшифровки (~1,6 ГБ) скачивается сама при первом ролике.
 
 Дальше — открыть корень в Claude Code, положить видео в `video/inbox/` и сказать:
 **«смонтируй ролик из video/inbox»**. Готовый файл — `video/projects/<ролик>/out/reel.mp4`.
@@ -41,7 +49,8 @@ video/           домен монтажа
   projects/        ролик = папка: edit.json в git, work/ и out/ — нет
   assets/          музыка и звуки + реестр лицензий
 engine/          пакет montage (Python) + тесты
-bin/             setup — установка, check — проверка связей базы
+bin/             montage — команда движка, setup / setup.cmd — установка (Mac / Windows),
+                 check — проверка связей базы
 planning/ inventory/ archive/   записи верха
 ```
 
@@ -52,7 +61,8 @@ planning/ inventory/ archive/   записи верха
 - Нет: стабилизации, генерации видео, обложек, автопубликации. Стиль надписей —
   нейтральный, свой задаётся JSON-файлом стиля.
 - Шумодав RNNoise — по своему файлу модели (`engine/models/README.md`).
-- Только macOS на Apple Silicon.
+- Mac на Apple Silicon или Windows. На Windows расшифровка медленнее (процессор, не Metal);
+  на Windows проверено меньше, чем на Mac.
 
 ## Лицензия
 

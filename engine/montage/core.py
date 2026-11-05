@@ -31,7 +31,7 @@ def run(cmd, capture=False, check=True, log=True):
     if log and _LOG and cmd and os.path.basename(cmd[0]) in ("ffmpeg", "ffprobe"):
         with open(_LOG, "a", encoding="utf-8") as f:
             f.write(shlex.join(cmd) + "\n")
-    r = subprocess.run(cmd, capture_output=True, text=True)
+    r = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace")
     if check and r.returncode != 0:
         tail = "\n".join(r.stderr.strip().splitlines()[-15:])
         raise FFError(f"{os.path.basename(cmd[0])} упал (код {r.returncode}):\n{tail}")

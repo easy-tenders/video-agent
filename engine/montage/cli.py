@@ -2,7 +2,7 @@
 
     montage init    <проект> [--title название]
     montage ingest  <проект> <файл…> [--id имя]         источники в лист (размер, к/с, HDR, звук)
-    montage transcribe <проект> [--src id…]             слова с таймингами (mlx-whisper)
+    montage transcribe <проект> [--src id…]             слова с таймингами (whisper)
     montage cuts    <проект> --src id [--pause 0.45]    куски без пауз по словам × тишине
     montage audio   <проект>                            голос → музыка/SFX → мастер −14 LUFS + гейты
     montage subs    <проект>                            субтитры по стилю листа

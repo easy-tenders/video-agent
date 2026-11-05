@@ -15,16 +15,24 @@ RNNOISE = os.path.join(MODELS, "bd.rnnn")             # необязательн
 STYLES = os.path.join(PKG, "styles")
 LICENSES = os.path.join(ROOT, "video", "assets", "licenses.md")
 
-# ffmpeg-full (brew, keg-only) — в нём zscale, libass, arnndn; обычный `ffmpeg` из brew их может не иметь.
+WINDOWS = os.name == "nt"
+
+# ffmpeg: на Mac — ffmpeg-full (brew, keg-only): в нём zscale, libass, arnndn; обычный `ffmpeg`
+# из brew их может не иметь. На Windows — полная сборка Gyan (winget Gyan.FFmpeg), она в PATH.
 _FULL = "/opt/homebrew/opt/ffmpeg-full/bin"
 FFMPEG = os.environ.get("FFMPEG") or (f"{_FULL}/ffmpeg" if os.path.exists(f"{_FULL}/ffmpeg") else "ffmpeg")
 FFPROBE = os.environ.get("FFPROBE") or (f"{_FULL}/ffprobe" if os.path.exists(f"{_FULL}/ffprobe") else "ffprobe")
 
-# ─── шрифты: static TTF в ~/Library/Fonts — их видят и Pillow, и libass ───────
-# Ставит `bin/setup` (Inter, OFL). Нет файла — станции берут системный шрифт.
-FONTS = os.path.expanduser("~/Library/Fonts")
-FONT_DIRS = (FONTS, "/Library/Fonts", "/System/Library/Fonts/Supplemental", "/System/Library/Fonts")
-FALLBACK_FONTS = ("Arial Bold.ttf", "Arial.ttf", "Helvetica.ttc")
+# ─── шрифты: static TTF в папке шрифтов пользователя — их видят и Pillow, и libass ─
+# Ставит `bin/setup` / `bin/setup.ps1` (Inter, OFL). Нет файла — станции берут системный шрифт.
+if WINDOWS:
+    FONTS = os.path.join(os.environ.get("LOCALAPPDATA", os.path.expanduser("~")), "Microsoft", "Windows", "Fonts")
+    FONT_DIRS = (FONTS, os.path.join(os.environ.get("WINDIR", r"C:\Windows"), "Fonts"))
+    FALLBACK_FONTS = ("arialbd.ttf", "arial.ttf", "segoeuib.ttf")
+else:
+    FONTS = os.path.expanduser("~/Library/Fonts")
+    FONT_DIRS = (FONTS, "/Library/Fonts", "/System/Library/Fonts/Supplemental", "/System/Library/Fonts")
+    FALLBACK_FONTS = ("Arial Bold.ttf", "Arial.ttf", "Helvetica.ttc")
 
 
 def font_path(name):

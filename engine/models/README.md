@@ -9,5 +9,5 @@
 этого шага (хайпасс + afftdn). Добавить: проверить лицензию набора, положить файл сюда
 под именем `bd.rnnn`.
 
-Модель расшифровки (mlx-whisper large-v3-turbo) скачивается в кэш Hugging Face сама при
+Модель расшифровки (whisper large-v3-turbo: mlx-whisper на Mac, faster-whisper на Windows) скачивается в кэш Hugging Face сама при
 первом `montage transcribe`.

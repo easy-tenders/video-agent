@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Команда движка монтажа — одна на Mac и Windows (Git Bash в Claude Code): находит engine/.venv сама.
+#   bin/montage --help
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+export PYTHONUTF8=1 PYTHONIOENCODING=utf-8
+# Windows: ffmpeg из winget лежит в WinGet\Links — окно, открытое до установки, его ещё не видит
+if [ -n "$LOCALAPPDATA" ] && command -v cygpath >/dev/null 2>&1; then
+  PATH="$PATH:$(cygpath -u "$LOCALAPPDATA")/Microsoft/WinGet/Links"
+fi
+for m in "$ROOT/engine/.venv/bin/montage" "$ROOT/engine/.venv/Scripts/montage.exe"; do
+  [ -x "$m" ] && exec "$m" "$@"
+done
+echo "нет engine/.venv — сначала установка: bin/setup (Mac) или bin/setup.cmd (Windows)" >&2
+exit 1

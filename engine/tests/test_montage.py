@@ -1,6 +1,6 @@
 """Тесты пакета на синтетике: ролики и звук делает ffmpeg из lavfi, модели не нужны.
 
-    .venv/bin/python -m pytest -q        (из engine/)
+    .venv/bin/python -m pytest -q        (из engine/; Windows: .venv/Scripts/python)
 """
 import json
 import os

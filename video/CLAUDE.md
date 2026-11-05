@@ -27,8 +27,8 @@
 - `assets/licenses.md` — реестр лицензий музыки и звуков: трека без строки там
   движок в ролик не пустит.
 - `planning/` — записи: `backlog.md` монтажа.
-- Код — `../engine/` (пакет `montage`), команда `../engine/.venv/bin/montage`;
-  установка — `../bin/setup`.
+- Код — `../engine/` (пакет `montage`), команда `../bin/montage`;
+  установка — `../bin/setup` (Mac) или `../bin/setup.cmd` (Windows).
 
 ## Правила
 

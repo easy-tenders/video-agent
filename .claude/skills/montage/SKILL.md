@@ -8,4 +8,4 @@ description: Смонтировать вертикальный ролик из �
 - Проверка готового файла — `video/video-vault/operations/check-reel.md`.
 - Команды и монтажный лист — `video/video-vault/tools/montage.md`; пороги — `video/video-vault/craft.md`.
 
-Команда — `engine/.venv/bin/montage` от корня репозитория. Нет `engine/.venv` — сначала `bin/setup`.
+Команда — `bin/montage` от корня репозитория. Нет `engine/.venv` — сначала установка: `bin/setup` (Mac) или `bin/setup.cmd` (Windows).
